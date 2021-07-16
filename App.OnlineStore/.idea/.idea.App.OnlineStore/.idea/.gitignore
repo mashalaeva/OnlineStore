@@ -1,0 +1,13 @@
+# Default ignored files
+/shelf/
+/workspace.xml
+# Rider ignored files
+/projectSettingsUpdater.xml
+/contentModel.xml
+/modules.xml
+/.idea.App.OnlineStore.iml
+# Datasource local storage ignored files
+/../../../../../../../../../:\Users\acer\Desktop\EduPractice\App.OnlineStore\.idea\.idea.App.OnlineStore\.idea/dataSources/
+/dataSources.local.xml
+# Editor-based HTTP Client requests
+/httpRequests/
