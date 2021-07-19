@@ -32,8 +32,8 @@ namespace App.Application
         /// пользователя</returns>
         public User GetCurrentUser()
         {
-            var email = _contextAccessor.HttpContext?.User?.FindFirst(ClaimTypes.Email)?.Value;
-            return FindUserByEmail(email!);
+            string email = _contextAccessor.HttpContext.User.FindFirst(ClaimTypes.Email).Value;
+            return FindUserByEmail(email);
         }
 
         /// <summary>
@@ -45,8 +45,8 @@ namespace App.Application
         /// <returns>возвращает объект
         /// класса User с указанной
         /// почтой</returns>
-        private User FindUserByEmail(string email)
-            => _db.Users.FirstOrDefault(p => p.Email == email)!;
+        public User FindUserByEmail(string email)
+            => _db.Users.FirstOrDefault(p => p.Email == email);
 
         /// <summary>
         /// Поиск пользователя по
@@ -158,7 +158,7 @@ namespace App.Application
             return tmpIdVal;
         }
 
-        private string GetTmpId()
+        public string GetTmpId()
             => _contextAccessor.HttpContext.Request.Cookies[TmpIdName];
 
 

@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "nei9/iabsFYCG4DyFCBjXK59ciG6vuMSZ7bFbd3zoBMfOs4WjhMVrNzUs+5pCKig0rmj2/gs3cjVt9gSJLKISQ==",
+  "dgSpecHash": "CmkQ3I3cVFZsLVBv24BkUg6EicuJGdvyRKS52myceTu/n2Yh41lPLViFMw21idTvpAeVV5I/NhzjiXUHbamEXg==",
   "success": true,
-  "projectFilePath": "C:\\Users\\acer\\Desktop\\EduPractice\\App.OnlineStore\\App.Application\\App.Application.csproj",
+  "projectFilePath": "C:\\Users\\acer\\Desktop\\EduPractice\\OnlineMarket\\App.OnlineStore\\App.Application\\App.Application.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\acer\\.nuget\\packages\\microsoft.aspnetcore.authentication\\2.2.0\\microsoft.aspnetcore.authentication.2.2.0.nupkg.sha512",
     "C:\\Users\\acer\\.nuget\\packages\\microsoft.aspnetcore.authentication.abstractions\\2.2.0\\microsoft.aspnetcore.authentication.abstractions.2.2.0.nupkg.sha512",

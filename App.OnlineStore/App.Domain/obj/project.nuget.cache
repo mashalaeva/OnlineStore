@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "LwtuZ5cosquthdHvR6ssDt60cCpnRJDi4Ynal0e3I+PIStF1PjwBMibDAdg17Iqs0EiK/7TLD4+lYDE7nbPRhA==",
+  "dgSpecHash": "tD0BZnYoWRPXhhB2m7A6Cqug7MFGPTk2ckgiRDwqs2DpAdWsxWG6hJi2zIqLqKpM7yi1hGV8OnCMYQTxxFMQVg==",
   "success": true,
-  "projectFilePath": "C:\\Users\\acer\\Desktop\\EduPractice\\App.OnlineStore\\App.Domain\\App.Domain.csproj",
+  "projectFilePath": "C:\\Users\\acer\\Desktop\\EduPractice\\OnlineMarket\\App.OnlineStore\\App.Domain\\App.Domain.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\acer\\.nuget\\packages\\microsoft.csharp\\4.5.0\\microsoft.csharp.4.5.0.nupkg.sha512",
     "C:\\Users\\acer\\.nuget\\packages\\microsoft.entityframeworkcore\\2.2.6\\microsoft.entityframeworkcore.2.2.6.nupkg.sha512",

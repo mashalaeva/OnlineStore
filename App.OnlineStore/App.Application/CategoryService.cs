@@ -18,7 +18,7 @@ namespace App.Application
         }
 
         public Category FindNecessaryCategoryById(int categoryId)
-            => _db.Categories.FirstOrDefault(p => p.Id == categoryId);
+            => _db.Categories.FirstOrDefault(p => p.Id == categoryId)!;
 
         public Category FindParentCategory(int categoryId)
             => FindParentCategory(FindNecessaryCategoryById(categoryId));

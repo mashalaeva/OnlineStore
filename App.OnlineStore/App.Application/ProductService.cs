@@ -1,6 +1,8 @@
-﻿using System.Linq;
+﻿using System.Collections.Generic;
+using System.Linq;
 using App.Domain;
 using Microsoft.AspNetCore.Http;
+using Microsoft.EntityFrameworkCore.ChangeTracking;
 
 namespace App.Application
 {
@@ -16,10 +18,8 @@ namespace App.Application
             _contextAccessor = contextAccessor;
         }
 
-        public Product FindProductById(int productId)
-        {
-            return _db.Products.FirstOrDefault(p => p.Id == productId)!;
-        }
+        public Product FindProductById(int productId) =>
+            _db.Products.FirstOrDefault(p => p.Id == productId)!;
 
         public void PutProductToBasket(int productId, Order basket)
         {
@@ -50,76 +50,6 @@ namespace App.Application
                     item.NumberOfProduct++;
             }
 
-            _db.SaveChanges();
-        }
-
-        public void DeleteProductFromBasket(int productId, Order basket)
-        {
-            Product product = FindProductById(productId);
-
-            var productInOrder = (from productsInOrder in _db.ProductsInOrders
-                where productsInOrder.Order == basket && productsInOrder.Product == product
-                select productsInOrder).FirstOrDefault();
-
-            // Если такого товара еще не встречалось в заказе.
-            if (productInOrder == null)
-                return;
-
-            // Если такой товар встречался, находим его и удаляем.
-            _db.ProductsInOrders.Remove(productInOrder);
-            _db.SaveChanges();
-        }
-
-        public void DecrementProductFromBasket(int productId, Order basket)
-        {
-            Product product = FindProductById(productId);
-
-            var productInOrder = (from productsInOrder in _db.ProductsInOrders
-                where productsInOrder.Order == basket && productsInOrder.Product == product
-                select productsInOrder).FirstOrDefault();
-
-            // Если такого товара еще не встречалось в заказе.
-            if (productInOrder == null)
-                return;
-
-            // Если такой товар встречался, уменьшаем его
-            // количество.
-            productInOrder.NumberOfProduct--;
-            _db.ProductsInOrders.Update(productInOrder);
-
-            if (productInOrder.NumberOfProduct <= 0)
-            {
-                _db.ProductsInOrders.Remove(productInOrder);
-            }
-
-            _db.SaveChanges();
-        }
-
-        public void IncrementProductFromBasket(int productId, Order basket)
-        {
-            Product product = FindProductById(productId);
-
-            var productInOrder = (from productsInOrder in _db.ProductsInOrders
-                where productsInOrder.Order == basket && productsInOrder.Product == product
-                select productsInOrder).FirstOrDefault();
-
-            // Если такого товара еще не встречалось в заказе.
-            if (productInOrder == null)
-            {
-                _db.ProductsInOrders.Add(new ProductsInOrder
-                {
-                    Product = _db.Products.FirstOrDefault(p => p.Id == productId),
-                    NumberOfProduct = 1,
-                    Order = basket
-                });
-                return;
-            }
-
-            // Если такой товар встречался, уменьшаем его
-            // количество.
-            productInOrder.NumberOfProduct++;
-
-            _db.ProductsInOrders.Update(productInOrder);
             _db.SaveChanges();
         }
     }

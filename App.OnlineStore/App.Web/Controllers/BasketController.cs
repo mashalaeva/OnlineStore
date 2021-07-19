@@ -12,6 +12,12 @@ namespace App.Web.Controllers
 {
     public class BasketController : Controller
     {
+        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
+        public IActionResult Error()
+        {
+            return View(new ErrorViewModel {RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier});
+        }
+
         private readonly CategoryService _categoryService;
         private readonly UserService _userService;
         private readonly OrderService _orderService;
@@ -23,20 +29,57 @@ namespace App.Web.Controllers
             _orderService = orderService;
         }
 
-        /*public IActionResult Index()
+        [HttpGet]
+        [HttpPost]
+        public IActionResult Index([FromForm] OrderedProductRequestModel orderedProduct, int basketId)
         {
-           // return View();
-        }
+            var user = _userService.GetCurrentUser();
 
-        public IActionResult Privacy()
-        {
-            //return View();
-        }*/
+            string tmpId = _userService.GetTmpId();
 
-        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
-        public IActionResult Error()
-        {
-            return View(new ErrorViewModel {RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier});
+            var userId = user.Id;
+            var userRole = _userService.GetUserRole(user.Id);
+
+            string PurchaseMessage = null;
+
+            if (basketId > 0)
+            {
+                if (userRole != user.Role)
+                {
+                    return RedirectToAction("Login", "Auth");
+                }
+                PurchaseMessage = $"Покупка успешно оформлена. Ваш номер заказа: {basketId}";
+            }
+
+            if (orderedProduct.AddButton != null)
+            {
+                _orderService.IncrementProductFromBasket(orderedProduct.ProductId, basketId);
+            }
+
+            if (orderedProduct.RemoveButton != null)
+            {
+                _orderService.DecrementProductFromBasket(orderedProduct.ProductId, basketId);
+            }
+
+            if (orderedProduct.RemoveAllButton != null)
+            {
+                _orderService.DeleteProductFromBasket(orderedProduct.ProductId, basketId);
+            }
+
+            var model = new BasketModel
+            {
+                ProductsInOrder = _orderService.OrderedProductsInBasketByUser(userId),
+                User = _userService.FindUserById(userId),
+                Basket = _orderService.GetBasket(userId),
+                ProductsInBasketCount = _orderService.CountOfProductsInBasket(userId)
+            };
+
+            if (!string.IsNullOrEmpty(PurchaseMessage))
+            {
+                model.PurchaseMessage = PurchaseMessage;
+            }
+
+            return View(model);
         }
     }
 }

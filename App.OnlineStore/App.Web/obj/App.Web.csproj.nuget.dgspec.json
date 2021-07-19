@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\acer\\Desktop\\EduPractice\\App.OnlineStore\\App.Web\\App.Web.csproj": {}
+    "C:\\Users\\acer\\Desktop\\EduPractice\\OnlineMarket\\App.OnlineStore\\App.Web\\App.Web.csproj": {}
   },
   "projects": {
-    "C:\\Users\\acer\\Desktop\\EduPractice\\App.OnlineStore\\App.Application\\App.Application.csproj": {
+    "C:\\Users\\acer\\Desktop\\EduPractice\\OnlineMarket\\App.OnlineStore\\App.Application\\App.Application.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\acer\\Desktop\\EduPractice\\App.OnlineStore\\App.Application\\App.Application.csproj",
+        "projectUniqueName": "C:\\Users\\acer\\Desktop\\EduPractice\\OnlineMarket\\App.OnlineStore\\App.Application\\App.Application.csproj",
         "projectName": "App.Application",
-        "projectPath": "C:\\Users\\acer\\Desktop\\EduPractice\\App.OnlineStore\\App.Application\\App.Application.csproj",
+        "projectPath": "C:\\Users\\acer\\Desktop\\EduPractice\\OnlineMarket\\App.OnlineStore\\App.Application\\App.Application.csproj",
         "packagesPath": "C:\\Users\\acer\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\acer\\Desktop\\EduPractice\\App.OnlineStore\\App.Application\\obj\\",
+        "outputPath": "C:\\Users\\acer\\Desktop\\EduPractice\\OnlineMarket\\App.OnlineStore\\App.Application\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
@@ -32,8 +32,8 @@
           "netcoreapp2.1": {
             "targetAlias": "netcoreapp2.1",
             "projectReferences": {
-              "C:\\Users\\acer\\Desktop\\EduPractice\\App.OnlineStore\\App.Domain\\App.Domain.csproj": {
-                "projectPath": "C:\\Users\\acer\\Desktop\\EduPractice\\App.OnlineStore\\App.Domain\\App.Domain.csproj"
+              "C:\\Users\\acer\\Desktop\\EduPractice\\OnlineMarket\\App.OnlineStore\\App.Domain\\App.Domain.csproj": {
+                "projectPath": "C:\\Users\\acer\\Desktop\\EduPractice\\OnlineMarket\\App.OnlineStore\\App.Domain\\App.Domain.csproj"
               }
             }
           }
@@ -91,14 +91,14 @@
         }
       }
     },
-    "C:\\Users\\acer\\Desktop\\EduPractice\\App.OnlineStore\\App.Domain\\App.Domain.csproj": {
+    "C:\\Users\\acer\\Desktop\\EduPractice\\OnlineMarket\\App.OnlineStore\\App.Domain\\App.Domain.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\acer\\Desktop\\EduPractice\\App.OnlineStore\\App.Domain\\App.Domain.csproj",
+        "projectUniqueName": "C:\\Users\\acer\\Desktop\\EduPractice\\OnlineMarket\\App.OnlineStore\\App.Domain\\App.Domain.csproj",
         "projectName": "App.Domain",
-        "projectPath": "C:\\Users\\acer\\Desktop\\EduPractice\\App.OnlineStore\\App.Domain\\App.Domain.csproj",
+        "projectPath": "C:\\Users\\acer\\Desktop\\EduPractice\\OnlineMarket\\App.OnlineStore\\App.Domain\\App.Domain.csproj",
         "packagesPath": "C:\\Users\\acer\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\acer\\Desktop\\EduPractice\\App.OnlineStore\\App.Domain\\obj\\",
+        "outputPath": "C:\\Users\\acer\\Desktop\\EduPractice\\OnlineMarket\\App.OnlineStore\\App.Domain\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
@@ -166,14 +166,14 @@
         }
       }
     },
-    "C:\\Users\\acer\\Desktop\\EduPractice\\App.OnlineStore\\App.Web\\App.Web.csproj": {
+    "C:\\Users\\acer\\Desktop\\EduPractice\\OnlineMarket\\App.OnlineStore\\App.Web\\App.Web.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\acer\\Desktop\\EduPractice\\App.OnlineStore\\App.Web\\App.Web.csproj",
+        "projectUniqueName": "C:\\Users\\acer\\Desktop\\EduPractice\\OnlineMarket\\App.OnlineStore\\App.Web\\App.Web.csproj",
         "projectName": "App.Web",
-        "projectPath": "C:\\Users\\acer\\Desktop\\EduPractice\\App.OnlineStore\\App.Web\\App.Web.csproj",
+        "projectPath": "C:\\Users\\acer\\Desktop\\EduPractice\\OnlineMarket\\App.OnlineStore\\App.Web\\App.Web.csproj",
         "packagesPath": "C:\\Users\\acer\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\acer\\Desktop\\EduPractice\\App.OnlineStore\\App.Web\\obj\\",
+        "outputPath": "C:\\Users\\acer\\Desktop\\EduPractice\\OnlineMarket\\App.OnlineStore\\App.Web\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
@@ -184,21 +184,21 @@
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
-          "net5.0"
+          "netcoreapp3.1"
         ],
         "sources": {
           "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
-          "net5.0": {
-            "targetAlias": "net5.0",
+          "netcoreapp3.1": {
+            "targetAlias": "netcoreapp3.1",
             "projectReferences": {
-              "C:\\Users\\acer\\Desktop\\EduPractice\\App.OnlineStore\\App.Application\\App.Application.csproj": {
-                "projectPath": "C:\\Users\\acer\\Desktop\\EduPractice\\App.OnlineStore\\App.Application\\App.Application.csproj"
+              "C:\\Users\\acer\\Desktop\\EduPractice\\OnlineMarket\\App.OnlineStore\\App.Application\\App.Application.csproj": {
+                "projectPath": "C:\\Users\\acer\\Desktop\\EduPractice\\OnlineMarket\\App.OnlineStore\\App.Application\\App.Application.csproj"
               },
-              "C:\\Users\\acer\\Desktop\\EduPractice\\App.OnlineStore\\App.Domain\\App.Domain.csproj": {
-                "projectPath": "C:\\Users\\acer\\Desktop\\EduPractice\\App.OnlineStore\\App.Domain\\App.Domain.csproj"
+              "C:\\Users\\acer\\Desktop\\EduPractice\\OnlineMarket\\App.OnlineStore\\App.Domain\\App.Domain.csproj": {
+                "projectPath": "C:\\Users\\acer\\Desktop\\EduPractice\\OnlineMarket\\App.OnlineStore\\App.Domain\\App.Domain.csproj"
               }
             }
           }
@@ -210,9 +210,29 @@
         }
       },
       "frameworks": {
-        "net5.0": {
-          "targetAlias": "net5.0",
+        "netcoreapp3.1": {
+          "targetAlias": "netcoreapp3.1",
           "dependencies": {
+            "Microsoft.AspNetCore.Authentication.Abstractions": {
+              "target": "Package",
+              "version": "[2.2.0, )"
+            },
+            "Microsoft.AspNetCore.Http": {
+              "target": "Package",
+              "version": "[2.2.2, )"
+            },
+            "Microsoft.AspNetCore.Mvc.Core": {
+              "target": "Package",
+              "version": "[2.2.5, )"
+            },
+            "Microsoft.AspNetCore.Razor": {
+              "target": "Package",
+              "version": "[2.2.0, )"
+            },
+            "Microsoft.AspNetCore.StaticFiles": {
+              "target": "Package",
+              "version": "[2.2.0, )"
+            },
             "Microsoft.EntityFrameworkCore": {
               "target": "Package",
               "version": "[2.2.6, )"
@@ -223,10 +243,19 @@
               "target": "Package",
               "version": "[2.2.6, )"
             },
+            "Microsoft.Extensions.Logging.Console": {
+              "target": "Package",
+              "version": "[2.2.0, )"
+            },
             "Microsoft.NETCore.App": {
               "suppressParent": "All",
               "target": "Package",
               "version": "[2.1.0, )"
+            },
+            "NETStandard.Library": {
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[2.0.3, )"
             },
             "Npgsql.EntityFrameworkCore.PostgreSQL": {
               "target": "Package",
