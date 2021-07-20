@@ -44,8 +44,9 @@ namespace App.Application
         /// <returns>возвращает объект
         /// класса User с указанной
         /// почтой</returns>
-        public User FindUserByEmail(string email)
-            => _db.Users.FirstOrDefault(p => p.Email == email);
+        public User? FindUserByEmail(string email)
+            => _db.Users.FirstOrDefault(p => p.Email == email) == null ? 
+                null : new User();
 
         /// <summary>
         /// Поиск пользователя по

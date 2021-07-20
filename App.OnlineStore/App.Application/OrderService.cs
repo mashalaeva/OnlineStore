@@ -2,6 +2,7 @@
 using App.Domain;
 using System.Collections.Generic;
 using System.Linq;
+using Microsoft.AspNetCore.Http;
 
 namespace App.Application
 {
@@ -9,9 +10,12 @@ namespace App.Application
     {
         private readonly OnlineStoreDbContext _db;
 
-        public OrderService(OnlineStoreDbContext db)
+        private readonly IHttpContextAccessor _contextAccessor;
+
+        public OrderService(OnlineStoreDbContext db, IHttpContextAccessor contextAccessor)
         {
             _db = db;
+            _contextAccessor = contextAccessor;
         }
 
         public List<Order> GetOrderListByUserId(int userId, int status)

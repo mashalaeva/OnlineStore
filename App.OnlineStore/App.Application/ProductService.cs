@@ -1,5 +1,6 @@
 ﻿using System.Linq;
 using App.Domain;
+using Microsoft.AspNetCore.Http;
 
 namespace App.Application
 {
@@ -7,9 +8,12 @@ namespace App.Application
     {
         private readonly OnlineStoreDbContext _db;
 
-        public ProductService(OnlineStoreDbContext db)
+        private readonly IHttpContextAccessor _contextAccessor;
+
+        public ProductService(OnlineStoreDbContext db, IHttpContextAccessor contextAccessor)
         {
             _db = db;
+            _contextAccessor = contextAccessor;
         }
 
         public Product FindProductById(int productId) =>

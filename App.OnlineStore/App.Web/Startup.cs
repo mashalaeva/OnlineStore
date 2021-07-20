@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using App.Application;
 using App.Domain;
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -37,10 +38,19 @@ namespace App.Web
             
             services.AddDbContext<OnlineStoreDbContext>();
 
+            services.AddHttpContextAccessor();
+            
             services.AddScoped<CategoryService>();
             services.AddScoped<OrderService>();
             services.AddScoped<ProductService>();
             services.AddScoped<UserService>();
+            
+            services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
+                .AddCookie(options =>
+                {
+                    options.LoginPath = new PathString("/Auth/Login");
+                    options.LogoutPath = new PathString("/Auth/Logout");
+                });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
