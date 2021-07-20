@@ -1,0 +1,60 @@
+﻿@model App.Web.Models.OrderedProductListModel
+
+<div class="row">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-header d-flex justify-content-start">
+                <div class="col-3">Наименование</div>
+                <div class="col-3">Стоимость(шт)</div>
+                <div class="col-3">Количество</div>
+                <div class="col-2">Сумма</div>
+            </div>
+            <div class="list-group">
+
+                @if (Model.ProductsInOrders != null)
+                {
+                    @for (int i = 0; i < Model.ProductsInOrders.Count(); i++)
+                    {
+                        <div class="list-group-item d-flex justify-content-start">
+
+                            <a href="/ProductDetail/@(Model.ProductsInOrders[i].Product.Id)" class="col-3 list-group-item-action">@Model.ProductsInOrders[i].Product.Name</a>
+                            <div class="col-3">@Model.ProductsInOrders[i].Product.Price руб</div>
+
+
+                            <div class="col-3">
+                                <form method="post" action="@Model.PostActionURL" name="form@(i)">
+
+                                    <input type="hidden" id="ProductId@(i)" name="ProductId" value="@(Model.ProductsInOrders[i].Product.Id)"/>
+                                    <input type="hidden" id="Price@(i)" name="Price" value="@(Model.ProductsInOrders[i].Product.Price)"/>
+                                    <input type="hidden" id="UserId@(i)" name="UserId" value="@(Model.UserId)"/>
+                                    <input type="hidden" id="OrderId@(i)" name="OrderId" value="@(Model.ProductsInOrders[i].Order.Id)"/>
+                                    <input type="hidden" id="ProductCount@(i)" name="ProductCount" value="1"/>
+                                    <input id="AddButton@(i)" name="AddButton" type="submit" value="+"/>
+                                    @Model.ProductsInOrders[i].NumberOfProduct
+                                    <input id="RemoveButton@(i)" name="RemoveButton" type="submit" value="-"/>
+
+                                </form>
+                            </div>
+
+                            <div class="col-2">@Model.ProductsInOrders[i].Product.Price</div>
+
+                            <div class="col-2">
+                                <form method="post" action="@Model.PostActionURL" name="formRemoveAll@(i)">
+                                    <input type="hidden" id="ProductId@(i)" name="ProductId" value="@(Model.ProductsInOrders[i].Product.Id)"/>
+                                    <input type="hidden" id="Price@(i)" name="Price" value="@(Model.ProductsInOrders[i].Product.Price)"/>
+                                    <input type="hidden" id="UserId@(i)" name="UserId" value="@(Model.UserId)"/>
+                                    <input type="hidden" id="OrderId@(i)" name="OrderId" value="@(Model.ProductsInOrders[i].Order.Id)"/>
+                                    <input type="hidden" id="ProductCount@(i)" name="ProductCount" value="@(Model.ProductsInOrders[i].NumberOfProduct)"/>
+                                    <input name="RemoveAllButton" id="RemoveAllButton@(i)" type="submit" value="Удалить"/>
+                                </form>
+
+
+                            </div>
+                        </div>
+                    }
+                }
+
+            </div>
+        </div>
+    </div>
+</div>

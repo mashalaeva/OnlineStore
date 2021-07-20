@@ -1,8 +1,36 @@
 ﻿@model App.Web.Models.CatalogModel
+@{ ViewData["Title"] = "Index"; }
 
-@{
-    ViewBag.Title = "title";
-    Layout = "_Layout";
-}
+@await Html.PartialAsync("_UserView", Model.User)
+<h1>Каталог товаров</h1>
+<div class="row">
+    <div class="col-3">
+        <div class="card">
+            <div class="card-header">Категории</div>
+            <div class="list-group">
+                <a href="/ProductCatalog" class="list-group-item list-group-item-action @(Model.SelectedCategoryId == 0 ? "active" : "")">Все категории</a>
 
-<h2>title</h2>
+                @foreach (var category in Model.CategoryList)
+                {
+    <a href="/ProductCatalog/@(category.Id)" class="list-group-item list-group-item-action @(Model.SelectedCategoryId == category.Id ? "active" : "")">@(category.Name)</a>}
+            </div>
+        </div>
+    </div>
+    <div class="col-9">
+        <form method="get" action="/ProductCatalog/@(Model.SelectedCategoryId)" name="ProductSearchForm">
+            <div class="input-group md-form form-sm form-2 pl-0  my-3">
+                <input class="form-control my-0 py-1 red-border" type="text" value="@(string.IsNullOrEmpty(Model.SearchString) ? "" :Model.SearchString  )" name="searchString" placeholder="Найти" aria-label="Найти">
+                <input type="Submit" class="btn btn-primary" value="Найти" />
+            </div>
+        </form>
+        <div class="card">
+            <div class="card-header d-flex justify-content-end">
+                <div class="mr-auto"><a href="/ProductCatalog/@(Model.SelectedCategoryId)?listOrder=@(Model.ProductList)">Наименоване</a> </div>
+                <div class="px-3 mx-3"><a href="/ProductCatalog/@(Model.SelectedCategoryId)?listOrder=@(Model.ProductList)">Стоимость</a></div>
+                <div class="px-5 mx-3"></div>
+            </div>
+            @await Html.PartialAsync("_ProductListView", new App.Web.Models.ProductListModel { Products = Model.ProductList, PostActionURL = "/ProductCatalog/" + (Model.SelectedCategoryId), UserId = (Model.User == null ? 0 : Model.User.Id) })
+        </div>
+    </div>
+    </div>
+

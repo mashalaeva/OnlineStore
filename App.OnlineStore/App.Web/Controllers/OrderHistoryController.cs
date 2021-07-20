@@ -51,8 +51,9 @@ namespace App.Web.Controllers
                         new OrderHistoryModel.OrderItem
                         {
                             Order = order,
+                            TotalPrice = _orderService.CountTotalPrice(user.Id),
                             ProductsInOrders = _orderService.OrderedProductsByOrderId(order.Id)
-                        }) ;
+                        });
                 }
             }
             catch (Exception)

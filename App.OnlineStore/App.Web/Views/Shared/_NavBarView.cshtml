@@ -1,0 +1,61 @@
+﻿@model App.Web.Models.UserNavBarModel
+
+<nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
+    <div class="container">
+        <a class="navbar-brand" asp-area="" asp-controller="ProductCatalog" asp-action="Index">
+            Тестовое приложение <br>
+            "Интернет магазин"
+        </a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
+                aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row">
+            <ul class="navbar-nav flex-grow-1">
+                <li class="nav-item">
+                    <a class="nav-link text-dark" asp-area="" asp-controller="ProductCatalog" asp-action="Index">Каталог товаров</a>
+                </li>
+            </ul>
+            @if (Model != null)
+            {
+            <ul class="navbar-nav ml-auto nav-flex-icons">
+                <li class="nav-item">
+                    <a class="nav-link waves-effect waves-light" asp-area="" asp-controller="Basket" asp-action="Index">
+                        Корзина (@(Model == null ? 0 : Model.BasketCount))
+                    </a>
+                </li>
+                @if (Model.User == null || Model.User.Role != App.Domain.ERole.Buyer)
+                {
+                    <li class="nav-item">
+                        <a class="nav-link waves-effect waves-light" asp-controller="Registration" asp-action="Index">
+                            Регистрация
+                        </a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link waves-effect waves-light" asp-area="" asp-controller="Auth" asp-action="Login">
+                            Войти
+                        </a>
+                    </li>
+                }
+                else
+                {
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            @( Model.User.Email)
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                            <a class="dropdown-item" asp-area="" asp-controller="User" asp-action="Index">Профиль</a>
+                            <a class="dropdown-item" asp-area="" asp-controller="OrderHistory" asp-action="Index">Заказы</a>
+                            <a class="dropdown-item" asp-area="" asp-controller="Auth" asp-action="Logout">Выход</a>
+                        </div>
+                    </li>
+                }
+            </ul>
+            }
+        </div>
+
+    </div>
+</nav>
+
+

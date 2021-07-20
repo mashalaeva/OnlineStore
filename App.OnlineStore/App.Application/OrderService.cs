@@ -2,8 +2,6 @@
 using App.Domain;
 using System.Collections.Generic;
 using System.Linq;
-using Microsoft.AspNetCore.Http;
-using Microsoft.EntityFrameworkCore.ChangeTracking;
 
 namespace App.Application
 {
@@ -11,12 +9,9 @@ namespace App.Application
     {
         private readonly OnlineStoreDbContext _db;
 
-        private readonly IHttpContextAccessor _contextAccessor;
-
-        public OrderService(OnlineStoreDbContext db, IHttpContextAccessor contextAccessor)
+        public OrderService(OnlineStoreDbContext db)
         {
             _db = db;
-            _contextAccessor = contextAccessor;
         }
 
         public List<Order> GetOrderListByUserId(int userId, int status)
@@ -29,7 +24,7 @@ namespace App.Application
             => (from productsInOrder in _db.ProductsInOrders
                 where productsInOrder.Order.Id == orderId
                 select productsInOrder.Product).ToList();
-        
+
         public List<ProductsInOrder> OrderedProductsByOrderId(int orderId)
             => (from productInOrder in _db.ProductsInOrders
                 where productInOrder.Order.Id == orderId
@@ -138,7 +133,7 @@ namespace App.Application
             _db.SaveChanges();
         }
 
-        public int CountOfProductsInBasket(int userId)
+        public int CountProductsNumberInBasket(int userId)
         {
             var orderId = GetBasketId(userId);
             return Decimal.ToInt32(
@@ -146,6 +141,14 @@ namespace App.Application
                     where pio.Order.Id == orderId
                     select pio)
                 .Sum(p => p.NumberOfProduct));
+        }
+
+        public double CountTotalPrice(int userId)
+        {
+            var orderId = GetBasketId(userId);
+            return (from pio in _db.ProductsInOrders
+                where pio.Order.Id == orderId
+                select pio).Sum(p => p.Product.Price);
         }
     }
 }

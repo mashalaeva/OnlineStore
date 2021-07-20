@@ -1,8 +1,51 @@
-﻿@model OrderHistoryModel
+﻿@model App.Web.Models.OrderHistoryModel
 
-@{
-    ViewBag.Title = "title";
-    Layout = "_Layout";
-}
+@await Html.PartialAsync("_UserView", Model.User)
+<h1>История заказов</h1>
 
-<h2>title</h2>
+<div class="row">
+    <div class="col-12">
+        @if (Model.OrderList != null && Model.OrderList.Count > 0)
+        {
+
+            @foreach (var orderItem in Model.OrderList)
+            {
+                <div class="card">
+                    <div class="card-header d-flex justify-content-start"></div>
+                    <div class="card-header d-flex justify-content-start">Заказ № @orderItem.Order.Id</div>
+                    <div class="card-header d-flex justify-content-start">Сумма:  @orderItem.TotalPrice руб</div>
+                </div>
+
+                <div class="card">
+                    <div class="card-header d-flex justify-content-start">
+                        <div class="col-3">Наименование</div>
+                        <div class="col-3">Стоимость(шт)</div>
+                        <div class="col-3">Количество</div>
+                        <div class="col-2">Сумма</div>
+                    </div>
+                    <div class="list-group">
+
+                        @foreach (var orderedProduct in orderItem.ProductsInOrders)
+                        {
+
+                            <div class="list-group-item d-flex justify-content-start">
+
+                                <a href="/ProductDetail/@(orderedProduct.Product.Id)" class="col-3 list-group-item-action">@(orderedProduct.Product.Name)</a>
+                                <div class="col-3">@orderedProduct.Product.Price</div>
+                                <div class="col-3">@orderedProduct.NumberOfProduct</div>
+                                <div class="col-2">@orderedProduct.Product.Price руб</div>
+                            </div>
+
+                        }
+                    </div>
+                </div>
+            }
+        }
+        else
+        {
+            <h1> Нет заказов </h1>
+        }
+
+
+    </div>
+ </div>

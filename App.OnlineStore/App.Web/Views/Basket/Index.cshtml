@@ -1,8 +1,23 @@
 ﻿@model App.Web.Models.BasketModel
+@{ ViewData["Title"] = "Index"; }
 
-@{
-    ViewBag.Title = "title";
-    Layout = "_Layout";
+@await Html.PartialAsync("_UserView", Model.User)
+<h1>Корзина</h1>
+
+@if (Model.ProductsInBasketCount == 0)
+{
+    <h3>@Model.PurchaseMessage</h3>
+    <h3>Нет товаров</h3>
+}
+else
+{
+    @await Html.PartialAsync("_OrderedProductListView", new App.Web.Models.OrderedProductListModel { ProductsInOrders = Model.ProductsInOrder, PostActionURL = "/Basket/", UserId =Model.User?.Id ?? 1 })
+    <h3> Сумма покупки: @Model.TotalPrice </h3> 
+    <form method="post" action="/Basket/" name="MakePurchase">
+        <input type="hidden" id="BasketId" name="BasketId" value="@(Model.Basket.Id)" />
+        <input class="btn btn-info py-3 my-3" name="MakePurchaseButton" id="MakePurchase" type="submit" value="Оформить покупку" />
+    </form>
 }
 
-<h2>title</h2>
+
+

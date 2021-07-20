@@ -1,8 +1,36 @@
-﻿@model ProductModel
+﻿@model App.Web.Models.ProductModel
+@{ ViewData["Title"] = "Index"; }
 
-@{
-    ViewBag.Title = "title";
-    Layout = "_Layout";
-}
+@await Html.PartialAsync("_UserView", Model.User)
 
-<h2>title</h2>
+<h1>@Model.Product.Name</h1>
+<div class="row">
+    <div class="col-4">
+        <div class="card">
+            <img src="@Model.Product.PictureReference" class="img-thumbnail img-responsive " alt="Product image">
+        </div>
+    </div>
+    <div class="col-7">
+        <div class="list-group">
+
+            <div class="list-group-item d-flex justify-content-start">
+                <div class="px-3 mx-3">Описание : @Model.Product.Description</div>
+            </div>
+            
+            <div class="list-group-item d-flex justify-content-start">
+                <div class="px-3 mx-3">Стоимость (ед.): @Model.Product.Price руб</div>
+            </div>
+        </div>
+        <div class="col-7 p-3 m-3 justify-content-center">
+            <form method="post" action="/ProductDetail/@(Model.Product.Id)" name="formBasket">
+
+                <input type="hidden" id="ProductId" name="ProductId" value="@(Model.Product.Id)" />
+                <input type="hidden" id="Price" name="Price" value="@(Model.Product.Price)" />
+                <input type="hidden" id="UserId" name="UserId" value="@(Model.User?.Id ?? 1)" />
+                <input type="hidden" id="ProductCount" name="ProductCount" value="1" />
+                <input class="btn btn-primary" id="AddButton" name="AddButton" type="submit" value="В корзину" />
+
+            </form>
+            </div>
+        </div>
+    </div>

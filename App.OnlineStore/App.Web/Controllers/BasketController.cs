@@ -71,7 +71,8 @@ namespace App.Web.Controllers
                 ProductsInOrder = _orderService.OrderedProductsInBasketByUser(userId),
                 User = _userService.FindUserById(userId),
                 Basket = _orderService.GetBasket(userId),
-                ProductsInBasketCount = _orderService.CountOfProductsInBasket(userId)
+                ProductsInBasketCount =  _orderService.CountProductsNumberInBasket(userId),
+                TotalPrice = _orderService.CountTotalPrice(userId)
             };
 
             if (!string.IsNullOrEmpty(PurchaseMessage))

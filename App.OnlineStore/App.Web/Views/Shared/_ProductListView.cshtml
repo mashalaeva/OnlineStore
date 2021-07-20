@@ -1,0 +1,24 @@
+﻿@model App.Web.Models.ProductListModel
+
+<div class="list-group">
+    @for (int i = 0; i < Model.Products.Count(); i++)
+    {
+        <div class="list-group-item d-flex justify-content-end">
+
+            <a href="/ProductDetail/@(Model.Products[i].Id)" class="list-group-item-action">@Model.Products[i].Name</a>
+            <div class="px-3 mx-3">@Model.Products[i].Price</div>
+            <div class="px-3 mx-3">
+                <form method="post" action="@Model.PostActionURL" name="form@(i)">
+
+                    <input type="hidden" id="ProductId@(i)" name="ProductId" value="@(Model.Products[i].Id)" />
+                    <input type="hidden" id="Price@(i)" name="Price" value="@(Model.Products[i].Price)" />
+                    <input type="hidden" id="UserId@(i)" name="UserId" value="@(Model.UserId)" />
+                    <input type="hidden" id="ProductCount@(i)" name="ProductCount" value="1" />
+                    <input class="btn btn-primary" type="submit" id="AddProduct@(i)" value="В корзину" />
+                </form>
+
+            </div>
+        </div>
+    }
+</div>
+

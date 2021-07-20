@@ -4,7 +4,6 @@ using App.Domain;
 using App.Web.Models;
 using Microsoft.AspNetCore.Mvc;
 
-
 namespace App.Web.Controllers
 {
     [Route("{controller}")]

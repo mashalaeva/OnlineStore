@@ -12,6 +12,8 @@ namespace App.Web.Models
         public class OrderItem
         {
             public Order Order { get; set; }
+            
+            public double TotalPrice { get; set; }
 
             public List<ProductsInOrder> ProductsInOrders { get; set; }
         }

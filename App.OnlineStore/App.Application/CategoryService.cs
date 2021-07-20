@@ -9,12 +9,11 @@ namespace App.Application
     {
         private readonly OnlineStoreDbContext _db;
 
-        private readonly IHttpContextAccessor _contextAccessor;
+       // private readonly IHttpContextAccessor _contextAccessor;
 
-        public CategoryService(OnlineStoreDbContext db, IHttpContextAccessor contextAccessor)
+        public CategoryService(OnlineStoreDbContext db)
         {
             _db = db;
-            _contextAccessor = contextAccessor;
         }
 
         public Category FindNecessaryCategoryById(int categoryId)

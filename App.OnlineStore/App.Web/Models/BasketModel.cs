@@ -13,6 +13,8 @@ namespace App.Web.Models
 
         public int ProductsInBasketCount { get; set; }
 
+        public double TotalPrice { get; set; }
+
         public string PurchaseMessage { get; set; }
     }
 }
