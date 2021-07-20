@@ -18,6 +18,7 @@ namespace App.Domain
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
+            optionsBuilder.EnableSensitiveDataLogging();
             optionsBuilder.UseNpgsql("Host=localhost;Port=5432;Database=OnlineMarketDb;Username=postgres;Password=1234");
         }
 

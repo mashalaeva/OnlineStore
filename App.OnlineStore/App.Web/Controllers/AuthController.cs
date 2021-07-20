@@ -5,7 +5,6 @@ using App.Web.Models;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.ModelBinding;
 
 namespace App.Web.Controllers
 {
@@ -51,9 +50,9 @@ namespace App.Web.Controllers
 
                 await _userService.Authenticate(user.Surname, user.Email);
 
-                return RedirectToAction("Index", "ProductCatalog");
-
                 ModelState.AddModelError("", "Некорректные логин и(или) пароль");
+                
+                return RedirectToAction("Index", "ProductCatalog");
             }
 
             string tmpId = _userService.GetTmpId();

@@ -1,11 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.Diagnostics;
 using App.Application;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
 using App.Web.Models;
 
 namespace App.Web.Controllers
@@ -34,9 +29,6 @@ namespace App.Web.Controllers
         public IActionResult Index([FromForm] OrderedProductRequestModel orderedProduct, int basketId)
         {
             var user = _userService.GetCurrentUser();
-
-            string tmpId = _userService.GetTmpId();
-
             var userId = user.Id;
             var userRole = _userService.GetUserRole(user.Id);
 

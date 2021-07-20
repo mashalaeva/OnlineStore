@@ -39,10 +39,9 @@ namespace App.Web.Controllers
                 User = user
             };
 
-            List<Order> orderList;
             try
             {
-                orderList = _orderService.GetOrderListByUserId(user.Id, 2);
+                var orderList = _orderService.GetOrderListByUserId(user.Id, 2);
                 model.OrderList = new List<OrderHistoryModel.OrderItem>();
 
                 foreach(var order in orderList)
