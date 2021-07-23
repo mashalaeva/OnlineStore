@@ -33,7 +33,11 @@ namespace App.Web.Controllers
 
             var model = new UserProfileModel
             {
-                User = user
+                UserNavBar = new UserNavBarModel
+                {
+                    BasketCount = 0,
+                    User = user
+                }
             };
 
             return View(model);

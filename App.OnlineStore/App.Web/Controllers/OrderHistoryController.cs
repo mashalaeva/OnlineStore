@@ -36,7 +36,11 @@ namespace App.Web.Controllers
 
             var model = new OrderHistoryModel
             {
-                User = user
+                UserNavBar = new UserNavBarModel
+                {
+                    BasketCount = 0,
+                    User = user
+                }
             };
 
             try

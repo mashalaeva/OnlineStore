@@ -24,49 +24,35 @@ namespace App.Web.Controllers
         [HttpPost("{productId?}")]
         public IActionResult Index(int productId, [FromForm] OrderedProductRequestModel orderedProduct)
         {
-            User user = null;
-            bool userIsNull = false;
-            string tmpId = null;
+            User user;
             try
             {
                 user = _userService.GetCurrentUser();
+                if (user == null)
+                    throw new Exception();
             }
             catch (Exception)
             {
-                userIsNull = true;
-            }
-
-            try
-            {
-                tmpId = _userService.GetTmpId();
-            }
-            catch (Exception)
-            {
-                // ignored
-            }
-
-            if (userIsNull && !string.IsNullOrEmpty(tmpId))
-            {
-                user = _userService.FindUserByEmail(tmpId);
+                user = _userService.GetOrCreateAnonymousUser();
             }
 
             if (orderedProduct.AddButton != null)
             {
-                if (user == null)
-                {
-                    user = _userService.GetOrCreateAnonymousUser();
-                }
-
                 orderedProduct.UserId = user.Id;
+                
                 _orderService.IncrementProductFromBasket(orderedProduct.ProductId,
-                    _orderService.GetBasketId(user.Id));
+                    _orderService.GetBasketId(user.Id), user.Id);
             }
 
             var model = new ProductModel
             {
                 CurrentProductId = productId,
                 Product = _productService.FindProductById(productId),
-                User = user
+                UserNavBar = new UserNavBarModel
+                {
+                    BasketCount = 0,
+                    User = user
+                }
             };
 
             return View(model);

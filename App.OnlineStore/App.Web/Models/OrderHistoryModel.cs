@@ -5,7 +5,7 @@ namespace App.Web.Models
 {
     public class OrderHistoryModel
     {
-        public User User { get; set; }
+        public UserNavBarModel UserNavBar { get; set; }
         
         public List<OrderItem> OrderList { get; set; }
 

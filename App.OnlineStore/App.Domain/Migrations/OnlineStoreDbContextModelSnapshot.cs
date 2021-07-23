@@ -128,6 +128,8 @@ namespace App.Domain.Migrations
 
                     b.Property<string>("Email");
 
+                    b.Property<string>("Login");
+
                     b.Property<string>("Name");
 
                     b.Property<string>("Password");

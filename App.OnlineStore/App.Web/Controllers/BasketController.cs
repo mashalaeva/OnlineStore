@@ -13,13 +13,11 @@ namespace App.Web.Controllers
             return View(new ErrorViewModel {RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier});
         }
 
-        private readonly CategoryService _categoryService;
         private readonly UserService _userService;
         private readonly OrderService _orderService;
 
-        public BasketController(CategoryService categoryService, UserService userService, OrderService orderService)
+        public BasketController(UserService userService, OrderService orderService)
         {
-            _categoryService = categoryService;
             _userService = userService;
             _orderService = orderService;
         }
@@ -40,12 +38,13 @@ namespace App.Web.Controllers
                 {
                     return RedirectToAction("Login", "Auth");
                 }
+
                 PurchaseMessage = $"Покупка успешно оформлена. Ваш номер заказа: {basketId}";
             }
 
             if (orderedProduct.AddButton != null)
             {
-                _orderService.IncrementProductFromBasket(orderedProduct.ProductId, basketId);
+                _orderService.IncrementProductFromBasket(orderedProduct.ProductId, basketId, userId);
             }
 
             if (orderedProduct.RemoveButton != null)
@@ -61,9 +60,13 @@ namespace App.Web.Controllers
             var model = new BasketModel
             {
                 ProductsInOrder = _orderService.OrderedProductsInBasketByUser(userId),
-                User = _userService.FindUserById(userId),
+                UserNavBar = new UserNavBarModel
+                {
+                    BasketCount = user == null ? 0 : _orderService.CountProductsNumberInBasket(userId),
+                    User = _userService.FindUserById(userId)
+                },
                 Basket = _orderService.GetBasket(userId),
-                ProductsInBasketCount =  _orderService.CountProductsNumberInBasket(userId),
+                ProductsInBasketCount = _orderService.CountProductsNumberInBasket(userId),
                 TotalPrice = _orderService.CountTotalPrice(userId)
             };
 

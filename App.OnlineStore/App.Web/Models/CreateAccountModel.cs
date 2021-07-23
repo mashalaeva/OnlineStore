@@ -4,7 +4,7 @@ namespace App.Web.Models
 {
     public class CreateAccountModel
     {
-        public User User { get; set; }
+        public UserNavBarModel UserNavBar { get; set; }
 
         public string OkButton { get; set; }
 

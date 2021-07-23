@@ -2,7 +2,6 @@
 using App.Domain;
 using System.Collections.Generic;
 using System.Linq;
-using Microsoft.AspNetCore.Http;
 
 namespace App.Application
 {
@@ -10,12 +9,9 @@ namespace App.Application
     {
         private readonly OnlineStoreDbContext _db;
 
-        private readonly IHttpContextAccessor _contextAccessor;
-
-        public OrderService(OnlineStoreDbContext db, IHttpContextAccessor contextAccessor)
+        public OrderService(OnlineStoreDbContext db)
         {
             _db = db;
-            _contextAccessor = contextAccessor;
         }
 
         public List<Order> GetOrderListByUserId(int userId, int status)
@@ -30,23 +26,47 @@ namespace App.Application
                 select productsInOrder.Product).ToList();
 
         public List<ProductsInOrder> OrderedProductsByOrderId(int orderId)
-            => (from productInOrder in _db.ProductsInOrders
+        {
+            var list = (from productInOrder in _db.ProductsInOrders
                 where productInOrder.Order.Id == orderId
-                orderby productInOrder.Product.Name
                 select productInOrder).ToList();
+            foreach (var l in list)
+            {
+                var a = l.Id;
+                var b = l.Order;
+                var c = l.Product;
+                var d = l.NumberOfProduct;
+            }
+            return list;
+        }
 
         public List<ProductsInOrder> OrderedProductsInBasketByUser(int userId)
             => OrderedProductsByOrderId(GetBasketId(userId));
 
         public int GetBasketId(int userId)
-            => GetBasket(userId).Id;
+        {
+            var order = GetBasket(userId);
+            return order == null ? CreateBasket(userId) : order.Id;
+        }
 
-        public Order GetBasket(int userId) =>
-            _db.Orders.FirstOrDefault(p => p.User.Id == userId)!;
+        public Order GetBasket(int userId)
+            => _db.Orders.FirstOrDefault(p => p.User.Id == userId)!;
+
+        public int CreateBasket(int userId)
+        {
+            Order basket = new Order
+            {
+                User = _db.Users.FirstOrDefault(u => u.Id == userId),
+                Status = EStatus.Basket
+            };
+            _db.Orders.Add(basket);
+            _db.SaveChanges();
+            return basket.Id;
+        }
 
         public void ChangeStatus(int orderId, EStatus newStatus)
         {
-            var order = _db.Orders.FirstOrDefault(p => p.Id.Equals(orderId));
+            var order = _db.Orders.FirstOrDefault(p => p.Id == orderId);
             if (order == null)
                 return;
             order.Status = newStatus;
@@ -109,8 +129,10 @@ namespace App.Application
             _db.SaveChanges();
         }
 
-        public void IncrementProductFromBasket(int productId, int basketId)
+        public void IncrementProductFromBasket(int productId, int basketId, int userId)
         {
+            if (_db.Orders.FirstOrDefault(b => b.Id == basketId) == null)
+                CreateBasket(userId);
             Product product = _db.Products.FirstOrDefault(p => p.Id == productId)!;
 
             var productInOrder = (from productsInOrder in _db.ProductsInOrders
@@ -126,14 +148,16 @@ namespace App.Application
                     NumberOfProduct = 1,
                     Order = _db.Orders.FirstOrDefault(p => p.Id == basketId)
                 });
-                return;
+            }
+            else
+            {
+                // Если такой товар встречался, увеличиваем его
+                // количество.
+                productInOrder.NumberOfProduct++;
+
+                _db.ProductsInOrders.Update(productInOrder);
             }
 
-            // Если такой товар встречался, уменьшаем его
-            // количество.
-            productInOrder.NumberOfProduct++;
-
-            _db.ProductsInOrders.Update(productInOrder);
             _db.SaveChanges();
         }
 

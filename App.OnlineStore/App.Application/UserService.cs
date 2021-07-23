@@ -31,7 +31,7 @@ namespace App.Application
         /// пользователя</returns>
         public User GetCurrentUser()
         {
-            string email = _contextAccessor.HttpContext.User.FindFirst(ClaimTypes.Email).Value;
+            var email = _contextAccessor.HttpContext?.User?.FindFirst(ClaimTypes.Email)?.Value;
             return FindUserByEmail(email);
         }
 
@@ -44,9 +44,8 @@ namespace App.Application
         /// <returns>возвращает объект
         /// класса User с указанной
         /// почтой</returns>
-        public User? FindUserByEmail(string email)
-            => _db.Users.FirstOrDefault(p => p.Email == email) == null ? 
-                null : new User();
+        public User FindUserByEmail(string email)
+            => _db.Users.FirstOrDefault(p => p.Email == email);
 
         /// <summary>
         /// Поиск пользователя по
@@ -86,13 +85,14 @@ namespace App.Application
         /// <param name="phone">номер телефона</param>
         /// <param name="role">роль</param>
         /// <returns>возвращает нового пользователя</returns>
-        public User CreateNewUser(string name, string surname, string address,
-            string email, string password, string phone, ERole role)
+        public User CreateNewUser(string name, string surname, string login,
+            string address, string email, string password, string phone, ERole role)
         {
             var user = new User()
             {
                 Name = name,
                 Surname = surname,
+                Login = login,
                 Address = address,
                 Email = email,
                 Password = password,
@@ -138,6 +138,7 @@ namespace App.Application
         {
             var user = new User
             {
+                Id = int.Parse(tmpId),
                 Name = tmpId,
                 Surname = tmpId,
                 Address = tmpId,
@@ -153,14 +154,21 @@ namespace App.Application
 
         private string GenerateTmpId()
         {
-            var tmpIdVal = $"{DateTime.Now.Ticks}";
-            SetTmpId(TmpIdName, tmpIdVal, 30);
-            return tmpIdVal;
+            int tmpIdVal = (int)(DateTime.Now.Ticks % 2147483647);
+            while (IdExisting(tmpIdVal))
+                tmpIdVal = (int) ((long) (tmpIdVal + 1) % 2147483647);
+            SetTmpId(TmpIdName, tmpIdVal.ToString(), 30);
+            return tmpIdVal.ToString();
+        }
+
+        private bool IdExisting(int id)
+        {
+            var user = _db.Users.FirstOrDefault(u => u.Id == id);
+            return user != null;
         }
 
         public string GetTmpId()
             => _contextAccessor.HttpContext.Request.Cookies[TmpIdName];
-
 
         private void SetTmpId(string key, string value, int expireTime)
         {
@@ -234,7 +242,7 @@ namespace App.Application
         public List<Order> GetOrdersHistory(int userId)
         {
             var list = (from order in _db.Orders
-                where order.User.Id.Equals(userId)
+                where order.User.Id == userId
                 select order).ToList();
             return list;
         }

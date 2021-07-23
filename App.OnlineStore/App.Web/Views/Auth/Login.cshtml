@@ -2,7 +2,7 @@
 
 @{ ViewData["Title"] = "Index"; }
 
-@await Html.PartialAsync("_UserView", Model.User)
+@await Html.PartialAsync("_NavBarView", Model.UserNavBar)
 <h2>Вход на сайт</h2>
 @using (Html.BeginForm("Login", "Auth", FormMethod.Post))
 {

@@ -30,13 +30,20 @@ namespace App.Application
             => FindSubcategories(FindNecessaryCategoryById(categoryId));
 
         public List<Category> FindSubcategories(Category category)
-            => _db.Categories.Where(c =>
-                c.Parent != null && c.Parent.Id.Equals(category.Id)
+        {
+            if (category == null)
+                return new List<Category>();
+            return _db.Categories.Where(c =>
+                c != null && c.Parent != null && c.Parent.Id == category.Id
             ).ToList();
+        }
 
         public List<Product> GetCategoryProducts(int categoryId)
             => (from product in _db.Products
-                where product.Category.Id.Equals(categoryId)
+                where product.Category.Id == categoryId
                 select product).ToList();
+
+        public List<Category> FindAllParentsCategories()
+            => _db.Categories.Where(c => c.Parent == null).ToList();
     }
 }

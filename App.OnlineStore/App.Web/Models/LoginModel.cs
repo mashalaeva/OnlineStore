@@ -14,6 +14,6 @@ namespace App.Web.Models
         [Display(Name = "Пароль")]
         public string Password { get; set; }
 
-        public User User { get; set; }
+        public UserNavBarModel UserNavBar { get; set; }
     }
 }

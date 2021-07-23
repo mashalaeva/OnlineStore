@@ -12,6 +12,6 @@ namespace App.Web.Models
 
         public List<PropertyValues> PropertyValuesList { get; set; }
 
-        public User User { get; set; }
+        public UserNavBarModel UserNavBar { get; set; }
     }
 }

@@ -31,7 +31,11 @@ namespace App.Web.Controllers
 
             var model = new LoginModel
             {
-                User = user
+                UserNavBar = new UserNavBarModel
+                {
+                    BasketCount = 0,
+                    User = user
+                }
             };
 
             return View(model);
@@ -63,7 +67,11 @@ namespace App.Web.Controllers
                 modelUser = _userService.FindUserByEmail(tmpId);
             }
 
-            model.User = modelUser;
+            model.UserNavBar = new UserNavBarModel
+            {
+                BasketCount = 0,
+                User = modelUser
+            };
             return View(model);
         }
 

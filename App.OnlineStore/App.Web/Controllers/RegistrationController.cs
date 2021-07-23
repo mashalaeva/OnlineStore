@@ -30,6 +30,8 @@ namespace App.Web.Controllers
                 try
                 {
                     user = _userService.FindUserByEmail(newUser.Email);
+                    if (user == null)
+                        throw new Exception();
                 }
                 catch (Exception)
                 {
@@ -37,6 +39,7 @@ namespace App.Web.Controllers
                     user = _userService.CreateNewUser(
                         newUser.FirstName,
                         newUser.SecondName,
+                        newUser.Login,
                         newUser.Address,
                         newUser.Email,
                         newUser.Password,
@@ -86,7 +89,11 @@ namespace App.Web.Controllers
 
             var model = new CreateAccountRequestModel
             {
-                User = user
+                UserNavBar = new UserNavBarModel
+                {
+                    BasketCount = 0,
+                    User = user
+                }
             };
             return View(model);
         }

@@ -1,7 +1,7 @@
 ﻿@model App.Web.Models.CreateAccountRequestModel
 @{ ViewData["Title"] = "Index"; }
 
-@await Html.PartialAsync("_UserView", Model.User)
+@await Html.PartialAsync("_NavBarView", Model.UserNavBar)
 
 <h2>Регистрация</h2>
 @using (Html.BeginForm("Register", "Registration", FormMethod.Post))

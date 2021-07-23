@@ -29,48 +29,36 @@ namespace App.Web.Controllers
         public IActionResult Index(int? categoryId, string searchString,
             [FromForm] OrderedProductRequestModel orderedProduct)
         {
-            User user = null;
-            bool userIsNull = false;
-            string tmpId = null;
+            User user;
             try
             {
                 user = _userService.GetCurrentUser();
+                if (user == null)
+                    throw new Exception();
             }
             catch (Exception)
             {
-                userIsNull = true;
-            }
-
-            try
-            {
-                tmpId = _userService.GetTmpId();
-            }
-            catch (Exception)
-            {
-                // ignored
-            }
-
-            if (userIsNull && !string.IsNullOrEmpty(tmpId))
-            {
-                user = _userService.FindUserByEmail(tmpId);
+                user = _userService.GetOrCreateAnonymousUser();
             }
 
             if (orderedProduct.ProductId > 0)
             {
-                user ??= _userService.GetOrCreateAnonymousUser();
-
                 _orderService.IncrementProductFromBasket(orderedProduct.ProductId,
-                    _orderService.GetBasketId(user.Id));
+                    _orderService.GetBasketId(user.Id), user.Id);
             }
-
 
             var model = new CatalogModel
             {
                 SelectedCategoryId = categoryId ?? 0,
-                CategoryList = _categoryService.FindSubcategories(categoryId ?? 0),
+                CategoryList = categoryId == null || categoryId <= 0 ? _categoryService.FindAllParentsCategories() 
+                    : _categoryService.FindSubcategories((int)categoryId),
                 ProductList = _categoryService.GetCategoryProducts(categoryId ?? 0),
                 SearchString = searchString,
-                User = user
+                UserNavBar = new UserNavBarModel
+                {
+                    BasketCount = user == null ? 0 : _orderService.CountProductsNumberInBasket(user.Id),
+                    User = user
+                }
             };
             return View(model);
         }

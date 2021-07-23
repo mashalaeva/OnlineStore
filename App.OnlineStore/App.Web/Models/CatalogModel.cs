@@ -13,7 +13,7 @@ namespace App.Web.Models
 
         public string SearchString { get; set; }
 
-        public User User { get; set; }
+        public UserNavBarModel UserNavBar { get; set; }
 
         public OrderedProductRequestModel OrderedProductRequest { get; set; }
     }

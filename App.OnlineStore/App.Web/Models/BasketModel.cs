@@ -9,7 +9,7 @@ namespace App.Web.Models
 
         public Order Basket { get; set; }
 
-        public User User { get; set; }
+        public UserNavBarModel UserNavBar { get; set; }
 
         public int ProductsInBasketCount { get; set; }
 

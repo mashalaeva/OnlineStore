@@ -45,7 +45,7 @@ namespace App.Web.Models
         [Compare("Password", ErrorMessage = "Пароли не совпадают")]
         public string ConfirmPassword { get; set; }
 
-        public User User { get; set; }
+        public UserNavBarModel UserNavBar { get; set; }
 
     }
 }

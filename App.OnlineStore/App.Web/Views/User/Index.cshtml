@@ -1,6 +1,6 @@
 ﻿@model App.Web.Models.UserProfileModel
 
-@await Html.PartialAsync("_UserView", Model.User)
+@await Html.PartialAsync("_NavBarView", Model.UserNavBar)
 
 <h1>Профиль пользователя</h1>
 <div class="row">
@@ -8,22 +8,22 @@
         <div class="list-group">
 
             <div class="list-group-item d-flex justify-content-start">
-                <div class="px-3 mx-3">Имя: @Model.User.Name </div>
+                <div class="px-3 mx-3">Имя: @Model.UserNavBar.User.Name </div>
             </div>
             <div class="list-group-item d-flex justify-content-start">
-                <div class="px-3 mx-3">Фамилия: @Model.User.Surname</div>
+                <div class="px-3 mx-3">Фамилия: @Model.UserNavBar.User.Surname</div>
             </div>
             <div class="list-group-item d-flex justify-content-start">
-                <div class="px-3 mx-3">Email: @Model.User.Email</div>
+                <div class="px-3 mx-3">Email: @Model.UserNavBar.User.Email</div>
             </div>
             <div class="list-group-item d-flex justify-content-start">
-                <div class="px-3 mx-3">Пароль: @Model.User.Password</div>
+                <div class="px-3 mx-3">Пароль: @Model.UserNavBar.User.Password</div>
             </div>
             <div class="list-group-item d-flex justify-content-start">
-                <div class="px-3 mx-3">Номер телефона: @Model.User.PhoneNumber</div>
+                <div class="px-3 mx-3">Номер телефона: @Model.UserNavBar.User.PhoneNumber</div>
             </div>
             <div class="list-group-item d-flex justify-content-start">
-                <div class="px-3 mx-3">Адрес: @Model.User.Address</div>
+                <div class="px-3 mx-3">Адрес: @Model.UserNavBar.User.Address</div>
             </div>
         </div>
     </div>

@@ -4,6 +4,6 @@ namespace App.Web.Models
 {
     public class UserProfileModel
     {
-        public User User { get; set; }
+        public UserNavBarModel UserNavBar { get; set; }
     }
 }

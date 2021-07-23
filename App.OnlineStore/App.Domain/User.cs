@@ -17,8 +17,11 @@
         
         // Номер телефона пользователя.
         public string PhoneNumber { get; set; }
-        
-        // Почта (логин) покупателя.
+
+        // Логин покупателя.
+        public string Login { get; set; }
+
+        // Почта покупателя.
         public string Email { get; set; }
         
         // Пароль покупателя.
