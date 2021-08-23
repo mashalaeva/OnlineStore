@@ -27,17 +27,15 @@ namespace App.Application
 
         public List<ProductsInOrder> OrderedProductsByOrderId(int orderId)
         {
-            var list = (from productInOrder in _db.ProductsInOrders
+            return (from productInOrder in _db.ProductsInOrders
                 where productInOrder.Order.Id == orderId
-                select productInOrder).ToList();
-            foreach (var l in list)
-            {
-                var a = l.Id;
-                var b = l.Order;
-                var c = l.Product;
-                var d = l.NumberOfProduct;
-            }
-            return list;
+                select new ProductsInOrder
+                {
+                    Id = productInOrder.Id,
+                    NumberOfProduct = productInOrder.NumberOfProduct,
+                    Order = productInOrder.Order,
+                    Product = productInOrder.Product
+                }).ToList();
         }
 
         public List<ProductsInOrder> OrderedProductsInBasketByUser(int userId)
@@ -87,8 +85,10 @@ namespace App.Application
             _db.SaveChanges();
         }
 
-        public void DeleteProductFromBasket(int productId, int basketId)
+        public void DeleteProductFromBasket(int productId, int basketId, int userId)
         {
+            basketId = GetBasketId(userId);
+
             Product product = _db.Products.FirstOrDefault(p => p.Id == productId)!;
 
             var productInOrder = (from productsInOrder in _db.ProductsInOrders
@@ -104,8 +104,10 @@ namespace App.Application
             _db.SaveChanges();
         }
 
-        public void DecrementProductFromBasket(int productId, int basketId)
+        public void DecrementProductFromBasket(int productId, int basketId, int userId)
         {
+            basketId = GetBasketId(userId);
+
             Product product = _db.Products.FirstOrDefault(p => p.Id == productId)!;
 
             var productInOrder = (from productsInOrder in _db.ProductsInOrders
@@ -131,8 +133,8 @@ namespace App.Application
 
         public void IncrementProductFromBasket(int productId, int basketId, int userId)
         {
-            if (_db.Orders.FirstOrDefault(b => b.Id == basketId) == null)
-                CreateBasket(userId);
+            basketId = GetBasketId(userId);
+
             Product product = _db.Products.FirstOrDefault(p => p.Id == productId)!;
 
             var productInOrder = (from productsInOrder in _db.ProductsInOrders
@@ -171,12 +173,11 @@ namespace App.Application
                 .Sum(p => p.NumberOfProduct));
         }
 
-        public double CountTotalPrice(int userId)
+        public double CountTotalPrice(int orderId)
         {
-            var orderId = GetBasketId(userId);
             return (from pio in _db.ProductsInOrders
                 where pio.Order.Id == orderId
-                select pio).Sum(p => p.Product.Price);
+                select pio).Sum(p => p.Product.Price * p.NumberOfProduct);
         }
     }
 }

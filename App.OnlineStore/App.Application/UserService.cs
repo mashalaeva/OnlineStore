@@ -24,6 +24,21 @@ namespace App.Application
         }
 
         /// <summary>
+        /// Получение списка всех покупателей
+        /// со статусом Buyer, у которых есть
+        /// активные заказы.
+        /// </summary>
+        /// <returns></returns>
+        public List<User> GetAllBuyersWithActiveOrders()
+            => (from order in _db.Orders
+                where order.User.Role == ERole.Buyer &&
+                      (order.Status == EStatus.Accepted ||
+                       order.Status == EStatus.Assembly ||
+                       order.Status == EStatus.Completed ||
+                       order.Status == EStatus.Sent)
+                select order.User).ToList();
+
+        /// <summary>
         /// Получение текущего пользователя.
         /// </summary>
         /// <returns>возвращает объект класса
@@ -154,7 +169,7 @@ namespace App.Application
 
         private string GenerateTmpId()
         {
-            int tmpIdVal = (int)(DateTime.Now.Ticks % 2147483647);
+            int tmpIdVal = (int) (DateTime.Now.Ticks % 2147483647);
             while (IdExisting(tmpIdVal))
                 tmpIdVal = (int) ((long) (tmpIdVal + 1) % 2147483647);
             SetTmpId(TmpIdName, tmpIdVal.ToString(), 30);
@@ -217,8 +232,14 @@ namespace App.Application
         /// удалить из базы данных</param>
         public void DeleteUser(User user)
         {
-            _db.Users.Remove(user);
-            _db.SaveChanges();
+            try
+            {
+                _db.Users.Remove(user);
+                _db.SaveChanges();
+            }
+            catch (Exception)
+            {
+            }
         }
 
         /// <summary>

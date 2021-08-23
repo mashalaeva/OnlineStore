@@ -1,0 +1,104 @@
+﻿@using App.Domain
+@model App.Web.Models.ChangeUserOrderStatusModel
+
+@await Html.PartialAsync("_NavBarView", Model.UserNavBar)
+<h1>Заказы пользователей</h1>
+
+<div class="row">
+    <div class="col-12">
+        @if (Model.OrderHistoryList != null && Model.OrderHistoryList.Count > 0)
+        {
+            @foreach (var orderHistoryModel in Model.OrderHistoryList)
+            {
+                @for (int i = 0; i < orderHistoryModel.OrderList.Count(); i++)
+                {
+                    <div class="card">
+                        <div class="card-header d-flex justify-content-start"></div>
+                        <div class="card-header d-flex justify-content-start">Заказ № @orderHistoryModel.OrderList[i].Order.Id</div>
+                        <div class="card-header d-flex justify-content-start">Сумма: @orderHistoryModel.OrderList[i].TotalPrice руб</div>
+
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                @if (orderHistoryModel.OrderList[i].Order.Status == EStatus.Accepted)
+                                {
+                                    <div class="card-header d-flex justify-content-start">Статус заказа: принят</div>
+                                }
+                                else if (orderHistoryModel.OrderList[i].Order.Status == EStatus.Assembly)
+                                {
+                                    <div class="card-header d-flex justify-content-start">Статус заказа: сборка</div>
+                                }
+                                else if (orderHistoryModel.OrderList[i].Order.Status == EStatus.Completed)
+                                {
+                                    <div class="card-header d-flex justify-content-start">Статус заказа: собран и готов к отправке</div>
+                                }
+                                else if (orderHistoryModel.OrderList[i].Order.Status == EStatus.Sent)
+                                {
+                                    <div class="card-header d-flex justify-content-start">Статус заказа: отправлен</div>
+                                }
+                                else if (orderHistoryModel.OrderList[i].Order.Status == EStatus.Delivered)
+                                {
+                                    <div class="card-header d-flex justify-content-start">Статус заказа: доставлен</div>
+                                }
+                            </a>
+                            <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                                @* TODO: каким образом передать данные в метод Index? *@
+                                <form method="post" action="/Admin/" name="ChangeStatus">
+                                    <input type="hidden" id="UserId@(i)" name="UserId" value="@(orderHistoryModel.OrderList[i].User.Id)"/>
+                                    <input type="hidden" id="OrderId@(i)" name="OrderId" value="@(orderHistoryModel.OrderList[i].Order.Id)"/>
+                                    <input type="hidden" id="TotalPrice@(i)" name="Price" value="@(orderHistoryModel.OrderList[i].TotalPrice)"/>
+                                    <input type="hidden" id="ProductsInOrders@(i)" name="ProductCount" value="@(orderHistoryModel.OrderList[i].ProductsInOrders)"/>
+                                    @if (orderHistoryModel.OrderList[i].Order.Status != EStatus.Accepted)
+                                    {
+                                        <a class="dropdown-item" asp-area="" asp-controller="Admin" asp-action="Index">Статус заказа: принят</a>
+                                    }
+                                    @if (orderHistoryModel.OrderList[i].Order.Status != EStatus.Assembly)
+                                    {
+                                        <a class="dropdown-item" asp-area="" asp-controller="Admin" asp-action="Index">Статус заказа: сборка</a>
+                                    }
+                                    @if (orderHistoryModel.OrderList[i].Order.Status != EStatus.Completed)
+                                    {
+                                        <a class="dropdown-item" asp-area="" asp-controller="Admin" asp-action="Index">Статус заказа: собран и готов к отправке</a>
+                                    }
+                                    @if (orderHistoryModel.OrderList[i].Order.Status != EStatus.Sent)
+                                    {
+                                        <a class="dropdown-item" asp-area="" asp-controller="Admin" asp-action="Index">Статус заказа: отправлен</a>
+                                    }
+                                    @if (orderHistoryModel.OrderList[i].Order.Status != EStatus.Delivered)
+                                    {
+                                        <a class="dropdown-item" asp-area="" asp-controller="Admin" asp-action="Index">Статус заказа: доставлен</a>
+                                    }
+                                </form>
+                            </div>
+                        </li>
+                    </div>
+
+                    <div class="card">
+                        <div class="card-header d-flex justify-content-start">
+                            <div class="col-3">Наименование</div>
+                            <div class="col-3">Стоимость(шт)</div>
+                            <div class="col-3">Количество</div>
+                            <div class="col-2">Сумма</div>
+                        </div>
+                        <div class="list-group">
+
+                            @foreach (var orderedProduct in orderHistoryModel.OrderList[i].ProductsInOrders)
+                            {
+                                <div class="list-group-item d-flex justify-content-start">
+
+                                    <a href="/ProductDetail/@(orderedProduct.Product.Id)" class="col-3 list-group-item-action">@(orderedProduct.Product.Name)</a>
+                                    <div class="col-3">@orderedProduct.Product.Price</div>
+                                    <div class="col-3">@orderedProduct.NumberOfProduct</div>
+                                    <div class="col-2">@orderedProduct.Product.Price руб</div>
+                                </div>
+                            }
+                        </div>
+                    </div>
+                }
+            }
+        }
+        else
+        {
+            <h1> Нет заказов </h1>
+        }
+    </div>
+</div>

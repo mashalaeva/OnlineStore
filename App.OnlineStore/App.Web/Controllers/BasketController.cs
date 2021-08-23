@@ -1,5 +1,6 @@
 ﻿using System.Diagnostics;
 using App.Application;
+using App.Domain;
 using Microsoft.AspNetCore.Mvc;
 using App.Web.Models;
 
@@ -27,7 +28,7 @@ namespace App.Web.Controllers
         public IActionResult Index([FromForm] OrderedProductRequestModel orderedProduct, int basketId)
         {
             var user = _userService.GetCurrentUser();
-            var userId = user.Id;
+            var userId = user == null ? 0 : user.Id;
             var userRole = _userService.GetUserRole(user.Id);
 
             string PurchaseMessage = null;
@@ -40,6 +41,7 @@ namespace App.Web.Controllers
                 }
 
                 PurchaseMessage = $"Покупка успешно оформлена. Ваш номер заказа: {basketId}";
+                _orderService.ChangeStatus(_orderService.GetBasketId(userId), EStatus.Accepted);
             }
 
             if (orderedProduct.AddButton != null)
@@ -49,12 +51,12 @@ namespace App.Web.Controllers
 
             if (orderedProduct.RemoveButton != null)
             {
-                _orderService.DecrementProductFromBasket(orderedProduct.ProductId, basketId);
+                _orderService.DecrementProductFromBasket(orderedProduct.ProductId, basketId, userId);
             }
 
             if (orderedProduct.RemoveAllButton != null)
             {
-                _orderService.DeleteProductFromBasket(orderedProduct.ProductId, basketId);
+                _orderService.DeleteProductFromBasket(orderedProduct.ProductId, basketId, userId);
             }
 
             var model = new BasketModel
@@ -67,7 +69,7 @@ namespace App.Web.Controllers
                 },
                 Basket = _orderService.GetBasket(userId),
                 ProductsInBasketCount = _orderService.CountProductsNumberInBasket(userId),
-                TotalPrice = _orderService.CountTotalPrice(userId)
+                TotalPrice = _orderService.CountTotalPrice(_orderService.GetBasketId(userId))
             };
 
             if (!string.IsNullOrEmpty(PurchaseMessage))

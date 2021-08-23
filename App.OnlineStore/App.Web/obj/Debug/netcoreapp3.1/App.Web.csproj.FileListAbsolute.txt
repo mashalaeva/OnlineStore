@@ -128,3 +128,4 @@ C:\Users\acer\Downloads\OnlineMarket-project\OnlineMarket-project\App.OnlineStor
 C:\Users\acer\Downloads\OnlineMarket-project\OnlineMarket-project\App.OnlineStore\App.Web\obj\Debug\netcoreapp3.1\App.Web.dll
 C:\Users\acer\Downloads\OnlineMarket-project\OnlineMarket-project\App.OnlineStore\App.Web\obj\Debug\netcoreapp3.1\App.Web.pdb
 C:\Users\acer\Downloads\OnlineMarket-project\OnlineMarket-project\App.OnlineStore\App.Web\obj\Debug\netcoreapp3.1\App.Web.genruntimeconfig.cache
+C:\Users\acer\Desktop\EduPractice\OnlineMarket\App.OnlineStore\App.Web\obj\Debug\netcoreapp3.1\Razor\Views\Admin\Index.cshtml.g.cs

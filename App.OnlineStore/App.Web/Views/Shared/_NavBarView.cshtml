@@ -3,8 +3,7 @@
 <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
     <div class="container">
         <a class="navbar-brand" asp-area="" asp-controller="ProductCatalog" asp-action="Index">
-            Тестовое приложение <br>
-            "Интернет магазин"
+            Интернет магазин
         </a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
                 aria-expanded="false" aria-label="Toggle navigation">
@@ -24,7 +23,7 @@
                         Корзина (@(Model == null ? 0 : Model.BasketCount))
                     </a>
                 </li>
-                @if (Model.User == null || Model.User.Role != App.Domain.ERole.Buyer)
+                @if (Model.User == null || (Model.User.Role != App.Domain.ERole.Buyer && Model.User.Role != App.Domain.ERole.Administrator))
                 {
                     <li class="nav-item">
                         <a class="nav-link waves-effect waves-light" asp-controller="Registration" asp-action="Index">
@@ -46,7 +45,11 @@
                         </a>
                         <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
                             <a class="dropdown-item" asp-area="" asp-controller="User" asp-action="Index">Профиль</a>
-                            <a class="dropdown-item" asp-area="" asp-controller="OrderHistory" asp-action="Index">Заказы</a>
+                            <a class="dropdown-item" asp-area="" asp-controller="OrderHistory" asp-action="Index">Мои заказы</a>
+                            @if (Model.User.Role != App.Domain.ERole.Administrator)
+                            {
+                                <a class="dropdown-item" asp-area="" asp-controller="Admin" asp-action="Index">Управление заказами покупателей</a>
+                            }
                             <a class="dropdown-item" asp-area="" asp-controller="Auth" asp-action="Logout">Выход</a>
                         </div>
                     </li>

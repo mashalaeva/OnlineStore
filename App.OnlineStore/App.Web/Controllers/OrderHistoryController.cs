@@ -13,15 +13,13 @@ namespace App.Web.Controllers
     {
         private readonly UserService _userService;
         private readonly OrderService _orderService;
-        private readonly CategoryService _categoryService;
 
-        public OrderHistoryController(CategoryService categoryService, UserService userService, OrderService orderService)
+        public OrderHistoryController(UserService userService, OrderService orderService)
         {
-            _categoryService = categoryService;
             _userService = userService;
             _orderService = orderService;
         }
-        
+
         public IActionResult Index()
         {
             User user;
@@ -46,15 +44,15 @@ namespace App.Web.Controllers
             try
             {
                 var orderList = _orderService.GetOrderListByUserId(user.Id, 2);
-                model.OrderList = new List<OrderHistoryModel.OrderItem>();
+                model.OrderList = new List<OrderItemModel>();
 
-                foreach(var order in orderList)
+                foreach (var order in orderList)
                 {
                     model.OrderList.Add(
-                        new OrderHistoryModel.OrderItem
+                        new OrderItemModel
                         {
                             Order = order,
-                            TotalPrice = _orderService.CountTotalPrice(user.Id),
+                            TotalPrice = _orderService.CountTotalPrice(order.Id),
                             ProductsInOrders = _orderService.OrderedProductsByOrderId(order.Id)
                         });
                 }
@@ -62,8 +60,8 @@ namespace App.Web.Controllers
             catch (Exception)
             {
             }
+
             return View(model);
         }
-
     }
 }

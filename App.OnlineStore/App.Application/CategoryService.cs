@@ -39,9 +39,13 @@ namespace App.Application
         }
 
         public List<Product> GetCategoryProducts(int categoryId)
-            => (from product in _db.Products
-                where product.Category.Id == categoryId
+        {
+            var res = (from product in _db.Products
+                where categoryId == 0 || product.Category.Id == categoryId ||
+                      FindSubcategories(categoryId).Contains(product.Category)
                 select product).ToList();
+            return res;
+        }
 
         public List<Category> FindAllParentsCategories()
             => _db.Categories.Where(c => c.Parent == null).ToList();
